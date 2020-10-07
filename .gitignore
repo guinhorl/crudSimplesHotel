@@ -6,6 +6,8 @@ application/cache/*
 application/logs/*
 !application/logs/index.html
 
+application/config/database.php
+
 !application/*/.htaccess
 
 composer.lock
@@ -30,7 +32,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/tests/
 /tests/results/
 
-#--Banco de Dados----------------
-
-application/config/database.php
 
