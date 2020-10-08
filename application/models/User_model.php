@@ -29,11 +29,16 @@ class User_model extends CI_Model
 	}
 
 	public function listarUsers(){
-		$result = $this->db->select('*')->from('usuario');
+		$this->db->select('id, nome, email, data_cadastro')->from('usuario');
+		$result = $this->db->get()->result();
 		if($result)
 			return $result;
 		else
 			return false;
 	}
 
+	public function existeUser($email){
+		$this->db->where('email', $email);
+		return $this->db->get('usuario')->num_rows();;
+	}
 }
