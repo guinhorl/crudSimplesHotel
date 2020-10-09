@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?>
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	<a class="navbar-brand" href="#">CRUD Simpleshotel</a>
@@ -12,10 +15,10 @@
 			</li>-->
 
 		</ul>
-		<form class="form-inline mt-2 mt-md-0">
+		<!--<form class="form-inline mt-2 mt-md-0">
 			<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-		</form>
+		</form>-->
 	</div>
 </nav>
 
@@ -29,6 +32,9 @@
 		</a>
 		<button type="button" class="btn btn-outline-warning" style="margin-left: 12px;">Enviar para Alberto &raquo;
 		</button>
+		<a href="<?= base_url('log') ?>" type="button" class="btn btn-secondary" >
+			Logs &raquo;
+		</a>
 		<hr>
 		<h4 style="text-align: center">Lista de Usuários</h4>
 		<form class="form-group"  method="post"  action="<?php echo base_url('') ?>" >
@@ -50,6 +56,8 @@
 					<th scope="row"><?= $usuarios->id ?></th>
 					<td><?= $usuarios->nome ?></td>
 					<td><?= $usuarios->email ?></td>
+					<!--<td><?/*= date_format($usuarios->data_cadastro, 'd-m-Y') */?></td>-->
+
 					<td><?= $usuarios->data_cadastro ?></td>
 					<td>
 						<div class="botaoList">

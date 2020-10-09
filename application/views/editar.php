@@ -1,4 +1,6 @@
-
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+?>
 <!-- Modal Editar -->
 <div class="jumbotron jumbotron-fluid">
 	<div class="container">

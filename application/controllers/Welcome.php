@@ -6,6 +6,7 @@ class Welcome extends CI_Controller {
 	public function __construct(){
 		parent:: __construct();
 		$this->load->model('user_model', 'userModel');
+		$this->load->model('log_model', 'logModel');
 	}
 
 	public function index()
@@ -16,6 +17,7 @@ class Welcome extends CI_Controller {
 		$this->load->view('commos/footer');
 	}
 	public function editar($id){
+
 		try {
 			$user = $this->userModel->getUsers($id);
 			$data['id'] = $user->id;
@@ -32,19 +34,27 @@ class Welcome extends CI_Controller {
 
 	public function cadastrar(){
 		$now = new DateTime();
-		$dataAgora = $now->format('Y-m-d');
+
 		$data = array(
 			'nome' => $this->input->post('nomeUser'),
 			'email' => $this->input->post('emailUser'),
-			'data_cadastro' => $dataAgora
+			'data_cadastro' => $now->format('d-m-Y')
+		);
+		//Dados do log
+		$dataLog = array(
+			'descricao' => $data['nome'] . ' foi cadastrado!',
+			'tipo' => 1,
+			'data' => $now->format('d-m-Y')
 		);
 		try {
+
 			if ($this->userModel->existeUser($data['email'])) {
 				$this->session->set_flashdata('mensagemCadastro', "<div class='alert alert-danger'>Esse email <strong> já está cadastrado! </strong>
             	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 				redirect(base_url());
 			} else {
 				$this->userModel->cadastrarUser($data);
+				$this->logModel->isertLog($dataLog);
 				$this->session->set_flashdata('mensagemCadastro', "<div class='alert alert-success'> Usuário <strong>Cadastrado com sucesso!</strong>
             	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 				redirect(base_url());
@@ -56,11 +66,20 @@ class Welcome extends CI_Controller {
 	}
 
 	public function deletarUser($id){
+		$now = new DateTime();
 		try {
+			$user = $this->userModel->getUsers($id);
+			$dataLog = array(
+				'descricao' => $user->nome . ' foi excluido!',
+				'tipo' => 2,
+				'data' => $now->format('Y-m-d H:i:s')
+			);
 			//Deleta o usuário
 			$result = $this->userModel->deletarUser($id);
+
 			//Conferi
 			if($result){
+				$this->logModel->isertLog($dataLog);
 				$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-success'>Usuário<strong> deletado </strong>com sucesso!
             	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 				redirect(base_url());
@@ -78,17 +97,23 @@ class Welcome extends CI_Controller {
 	}
 
 	public function editarUser($id){
-
+		$now = new DateTime();
 		try {
 			if($this->userModel->existeIdUser($id)){
 				$updateData = array(
 					'nome' => $this->input->post('nomeUser'),
 					'email' => $this->input->post('emailUser')
 				);
+				$dataLog = array(
+					'descricao' => $updateData['nome'] . ' foi atualizado!',
+					'tipo' => 3,
+					'data' => $now->format('d-m-Y H:i:s')
+				);
 				//Edita o usuário
 				$result = $this->userModel->editarUser($id, $updateData);
 				//Conferi!
 				if($result) {
+					$this->logModel->isertLog($dataLog);
 					$this->session->set_flashdata('mensagemEditar', "<div class='alert alert-success'>Usuário<strong> atualizado </strong>com sucesso!
             	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 					redirect(base_url());

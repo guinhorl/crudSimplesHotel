@@ -53,3 +53,4 @@ $route['default_controller'] = 'Welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['editar'] = 'Welcome/Editar';
+$route['log'] = 'Log/logs';
