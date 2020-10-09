@@ -38,6 +38,7 @@ $this->load->view('commos/header');
 		<form class="form-group"  method="post"  action="<?php echo base_url('') ?>" >
 			<table class="table table-bordered">
 				<?php echo $this->session->flashdata('mensagemCadastro');?>
+				<?php echo $this->session->flashdata('mensagemDelete');?>
 				<thead>
 				<tr>
 					<th scope="col">ID</th>
@@ -55,8 +56,10 @@ $this->load->view('commos/header');
 					<td><?= $usuarios->data_cadastro ?></td>
 					<td>
 						<div class="botaoList">
-							<button type="submit" class="btn btn-warning btn-sm">Editar</button>
-							<button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+							<!--<button type="submit" class="btn btn-warning btn-sm">Editar</button>-->
+							<!--<button type="submit" class="btn btn-danger btn-sm">Excluir</button>-->
+							<a href="<?= base_url('editar') ?>" class="btn btn-warning btn-sm">Editar</a>
+							<a href="<?= base_url('Welcome/deletarUser/' . $usuarios->id) ?>" class="btn btn-danger btn-sm">Excluir</a>
 						</div>
 					</td>
 				</tr>
@@ -90,6 +93,7 @@ $this->load->view('commos/header');
 		</div>
 	</div>
 </form>
+
 <?php
 $this->load->view('commos/footer');
 ?>

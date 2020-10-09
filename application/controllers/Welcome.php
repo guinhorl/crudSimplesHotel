@@ -13,6 +13,11 @@ class Welcome extends CI_Controller {
 		$data['user'] = $this->userModel->listarUsers();
 		$this->load->view('home', $data);
 	}
+	public function editar(){
+		//$user = $this->userModel->existeIdUser($id);
+		//echo $id;
+		$this->load->view('editar-user');
+	}
 
 	public function cadastrar(){
 		$now = new DateTime();
@@ -37,6 +42,59 @@ class Welcome extends CI_Controller {
 			$this->session->set_flashdata('mensagemCadastro', "<div class='alert alert-danger'> ERRO de <strong>cadstro</strong> do usuário! 
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" . $erro->getMessage());
 		}
+	}
+
+	public function deletarUser($id){
+		try {
+			//Deleta o usuário
+			$result = $this->userModel->deletarUser($id);
+			//Conferi
+			if($result){
+				$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-success'>Usuário<strong> deletado </strong>com sucesso!
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+				redirect(base_url());
+			}else{
+				$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>Erro </strong>ao deletar usuário!
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+				redirect(base_url());
+			}
+
+		}catch (Exception $error){
+			$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>". $error ."</strong>
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+			redirect(base_url());
+		}
+	}
+
+	public function editarUser($id){
+
+		try {
+			if($this->userModel->existeIdUser($id)){
+				$updateData = array(
+					'nome' => $this->input->post('nomeUser'),
+					'email' => $this->input->post('emailUser')
+				);
+				//Edita o usuário
+				$result = $this->userModel->editarUser($id, $updateData);
+				//Conferi!
+				if($result) {
+					$this->session->set_flashdata('mensagemEditar', "<div class='alert alert-success'>Usuário<strong> atualizado </strong>com sucesso!
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+					redirect(base_url());
+				}else{
+					$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>Erro </strong>ao atualizar o usuário!
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+					redirect(base_url());
+				}
+			}
+
+		}catch (Exception $error){
+			$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>". $error ."</strong>
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+			redirect(base_url());
+		}
+
+
 	}
 
 }

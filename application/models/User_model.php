@@ -41,4 +41,9 @@ class User_model extends CI_Model
 		$this->db->where('email', $email);
 		return $this->db->get('usuario')->num_rows();;
 	}
+
+	public function existeIdUser($id){
+		$this->db->where('id', $id);
+		return $this->db->get('usuario')->num_rows();;
+	}
 }
