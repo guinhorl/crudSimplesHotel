@@ -11,12 +11,23 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$data['user'] = $this->userModel->listarUsers();
+		$this->load->view('commos/header');
 		$this->load->view('home', $data);
+		$this->load->view('commos/footer');
 	}
-	public function editar(){
-		//$user = $this->userModel->existeIdUser($id);
-		//echo $id;
-		$this->load->view('editar-user');
+	public function editar($id){
+		try {
+			$user = $this->userModel->getUsers($id);
+			$data['id'] = $user->id;
+			$data['nome'] = $user->nome;
+			$data['email'] = $user->email;
+
+			$this->load->view('commos/header');
+			$this->load->view('editar', $data);
+			$this->load->view('commos/footer');
+		}catch (Exception $error){
+
+		}
 	}
 
 	public function cadastrar(){

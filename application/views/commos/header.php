@@ -11,6 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="generator" content="Jekyll v4.1.1">
 	<title>Fixed top navbar example · Bootstrap</title>
 
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"  crossorigin="anonymous">
 	<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/navbar-fixed/">
 
 	<!-- Bootstrap core CSS -->

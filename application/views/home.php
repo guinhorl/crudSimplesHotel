@@ -1,8 +1,4 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
 
-$this->load->view('commos/header');
-?>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	<a class="navbar-brand" href="#">CRUD Simpleshotel</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -48,7 +44,8 @@ $this->load->view('commos/header');
 				</tr>
 				</thead>
 				<tbody>
-				<?php foreach ( $user as $usuarios ) { ?>
+				<?php if ($user){
+				foreach ( $user as $usuarios ) { ?>
 				<tr>
 					<th scope="row"><?= $usuarios->id ?></th>
 					<td><?= $usuarios->nome ?></td>
@@ -58,12 +55,13 @@ $this->load->view('commos/header');
 						<div class="botaoList">
 							<!--<button type="submit" class="btn btn-warning btn-sm">Editar</button>-->
 							<!--<button type="submit" class="btn btn-danger btn-sm">Excluir</button>-->
-							<a href="<?= base_url('editar') ?>" class="btn btn-warning btn-sm">Editar</a>
+							<a href="<?= base_url('Welcome/editar/' . $usuarios->id) ?>" class="btn btn-warning btn-sm">Editar</a>
 							<a href="<?= base_url('Welcome/deletarUser/' . $usuarios->id) ?>" class="btn btn-danger btn-sm">Excluir</a>
 						</div>
 					</td>
 				</tr>
-				<?php } ?>
+				<?php }
+				} ?>
 				</tbody>
 			</table>
 		</form>
@@ -94,6 +92,4 @@ $this->load->view('commos/header');
 	</div>
 </form>
 
-<?php
-$this->load->view('commos/footer');
-?>
+
