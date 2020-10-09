@@ -61,7 +61,7 @@ class Welcome extends CI_Controller {
 			}
 		} catch (Exception $erro) {
 			$this->session->set_flashdata('mensagemCadastro', "<div class='alert alert-danger'> ERRO de <strong>cadstro</strong> do usuário! 
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>" . $erro->getMessage());
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 		}
 	}
 
@@ -90,7 +90,7 @@ class Welcome extends CI_Controller {
 			}
 
 		}catch (Exception $error){
-			$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>". $error ."</strong>
+			$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>Vixxx não foi deletado não doidão!!</strong>
             	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 			redirect(base_url());
 		}
@@ -123,14 +123,43 @@ class Welcome extends CI_Controller {
 					redirect(base_url());
 				}
 			}
-
 		}catch (Exception $error){
-			$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>". $error ."</strong>
+			$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>Vixxxx, foi atualizado não doido!!</strong>
             	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 			redirect(base_url());
 		}
-
-
 	}
 
+	//Enviar link do projeto por email
+	public function enviar(){
+		//Variaveis com dados
+		$to = 'teste@yahoo.com.br';
+		$subject = 'CRUD para avaliação de desenvolvedor júnior';
+		$from = 'teste@gmail.com';
+		$emailContent = '<p>link do projeto no github</p> https://github.com/guinhorl/crudSimplesHotel';
+
+		//
+		try {
+			/*$this->email->initialize($config);*/
+			$this->email->from($from);
+			$this->email->to($to);
+			$this->email->subject($subject);
+			$this->email->message($emailContent);
+			//$this->email->send();
+			if($this->email->send()){
+				$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-success'><strong>Email enviado com sucesso!</strong>
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+				redirect(base_url());
+			}else{
+				$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-danger'><strong>Erro </strong>no envio do email!
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+				redirect(base_url());
+
+			}
+		}catch (Exception $error){
+			$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-danger'><strong>Vixxxx </strong>algo de errado com o envio do email aconteceu, uma exceção foi disparada!
+           	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+			redirect(base_url());
+		}
+	}
 }

@@ -30,9 +30,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<a type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCadastro">
 			Cadastrar Usuário
 		</a>
-		<button type="button" class="btn btn-outline-warning" style="margin-left: 12px;">Enviar para Alberto &raquo;
-		</button>
-		<a href="<?= base_url('log') ?>" type="button" class="btn btn-secondary" >
+		<a href="<?= base_url('Welcome/enviar') ?>" type="button" class="btn btn-outline-warning" style="margin-left: 12px;">Enviar para Alberto &raquo;
+		</a>
+		<a href="<?= base_url('log') ?>" type="button" class="btn btn-secondary" style="margin-left: 12px;">
 			Logs &raquo;
 		</a>
 		<hr>
@@ -41,6 +41,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<table class="table table-bordered">
 				<?php echo $this->session->flashdata('mensagemCadastro');?>
 				<?php echo $this->session->flashdata('mensagemDelete');?>
+				<?php echo $this->session->flashdata('mensagemEmail');?>
 				<thead>
 				<tr>
 					<th scope="col">ID</th>
