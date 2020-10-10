@@ -40,6 +40,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				font-size: 3.5rem;
 			}
 		}
+		th {
+			cursor: pointer;
+		}
 	</style>
 
 </head>

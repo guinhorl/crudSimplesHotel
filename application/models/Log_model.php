@@ -17,13 +17,4 @@ class Log_model extends CI_Model
 			return false;
 	}
 
-	public function tipoLogs($tipo){
-		$this->db->select('id, descricao, tipo, data')->from('log')->where('tipo', $tipo);
-		$result = $this->db->get()->result();
-		if($result)
-			return $result;
-		else
-			return false;
-	}
-
 }

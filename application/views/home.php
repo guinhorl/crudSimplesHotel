@@ -38,7 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<hr>
 		<h4 style="text-align: center">Lista de Usuários</h4>
 		<form class="form-group"  method="post"  action="<?php echo base_url('') ?>" >
-			<table class="table table-bordered">
+			<table class="table table-bordered tablesorter">
 				<?php echo $this->session->flashdata('mensagemCadastro');?>
 				<?php echo $this->session->flashdata('mensagemDelete');?>
 				<?php echo $this->session->flashdata('mensagemEmail');?>

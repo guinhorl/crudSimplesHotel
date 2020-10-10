@@ -43,8 +43,8 @@ class Welcome extends CI_Controller {
 		//Dados do log
 		$dataLog = array(
 			'descricao' => $data['nome'] . ' foi cadastrado!',
-			'tipo' => 1,
-			'data' => $now->format('d-m-Y')
+			'tipo' => 'Cadastrado',
+			'data' => $now->format('d-m-Y H:i:s')
 		);
 		try {
 
@@ -71,7 +71,7 @@ class Welcome extends CI_Controller {
 			$user = $this->userModel->getUsers($id);
 			$dataLog = array(
 				'descricao' => $user->nome . ' foi excluido!',
-				'tipo' => 2,
+				'tipo' => 'Deletado',
 				'data' => $now->format('Y-m-d H:i:s')
 			);
 			//Deleta o usuário
@@ -106,7 +106,7 @@ class Welcome extends CI_Controller {
 				);
 				$dataLog = array(
 					'descricao' => $updateData['nome'] . ' foi atualizado!',
-					'tipo' => 3,
+					'tipo' => 'Atualizado',
 					'data' => $now->format('d-m-Y H:i:s')
 				);
 				//Edita o usuário
