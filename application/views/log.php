@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<div class="form-group">
 	<h4 style="text-align: center">Lista de Logs</h4>
 
-	<a href="<?= base_url() ?>" type="button" class="btn btn-outline-primary" >
+	<a href="<?= base_url() ?>" type="button" class="btn btn-primary" >
 		Voltar &laquo;
 	</a>
 </div>

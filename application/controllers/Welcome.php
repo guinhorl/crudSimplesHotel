@@ -133,10 +133,11 @@ class Welcome extends CI_Controller {
 	//Enviar link do projeto por email
 	public function enviar(){
 		//Variaveis com dados
-		$to = 'teste@yahoo.com.br';
+		/*$this->load->library('email');*/
+		$to = 'wagnerramosl@yahoo.com.br';
 		$subject = 'CRUD para avaliação de desenvolvedor júnior';
-		$from = 'teste@gmail.com';
-		$emailContent = '<p>link do projeto no github</p> https://github.com/guinhorl/crudSimplesHotel';
+		$from = 'cantaoextreme@gmail.com';
+		$mensagem = '<p>link do projeto no github</p> https://github.com/guinhorl/crudSimplesHotel';
 
 		//
 		try {
@@ -144,7 +145,7 @@ class Welcome extends CI_Controller {
 			$this->email->from($from);
 			$this->email->to($to);
 			$this->email->subject($subject);
-			$this->email->message($emailContent);
+			$this->email->message($mensagem);
 			//$this->email->send();
 			if($this->email->send()){
 				$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-success'><strong>Email enviado com sucesso!</strong>
@@ -153,7 +154,8 @@ class Welcome extends CI_Controller {
 			}else{
 				$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-danger'><strong>Erro </strong>no envio do email!
             	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
-				redirect(base_url());
+				var_dump($this->email->print_debugger(array('headers')));
+				/*redirect(base_url());*/
 
 			}
 		}catch (Exception $error){
@@ -162,4 +164,5 @@ class Welcome extends CI_Controller {
 			redirect(base_url());
 		}
 	}
+
 }
