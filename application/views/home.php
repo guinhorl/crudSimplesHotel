@@ -41,6 +41,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<table class="table table-bordered tablesorter">
 				<?php echo $this->session->flashdata('mensagemCadastro');?>
 				<?php echo $this->session->flashdata('mensagemDelete');?>
+				<?php echo $this->session->flashdata('mensagemEditar');?>
 				<?php echo $this->session->flashdata('mensagemEmail');?>
 				<thead>
 				<tr>

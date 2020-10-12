@@ -15,4 +15,5 @@ class Log extends CI_Controller
 		$this->load->view('commos/footer');
 	}
 
+
 }

@@ -104,28 +104,32 @@ class Welcome extends CI_Controller {
 					'nome' => $this->input->post('nomeUser'),
 					'email' => $this->input->post('emailUser')
 				);
+				//Atualização do log
+				$descricao = $this->upLog($id, $updateData['nome'], $updateData['email']);
+
 				$dataLog = array(
-					'descricao' => $updateData['nome'] . ' foi atualizado!',
+					'descricao' => $descricao,
 					'tipo' => 'Atualizado',
 					'data' => $now->format('d-m-Y H:i:s')
 				);
+
 				//Edita o usuário
 				$result = $this->userModel->editarUser($id, $updateData);
 				//Conferi!
 				if($result) {
 					$this->logModel->isertLog($dataLog);
 					$this->session->set_flashdata('mensagemEditar', "<div class='alert alert-success'>Usuário<strong> atualizado </strong>com sucesso!
-            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+            		<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 					redirect(base_url());
 				}else{
 					$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>Erro </strong>ao atualizar o usuário!
-            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+            		<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 					redirect(base_url());
 				}
 			}
 		}catch (Exception $error){
 			$this->session->set_flashdata('mensagemDelete', "<div class='alert alert-danger'><strong>Vixxxx, foi atualizado não doido!!</strong>
-            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 			redirect(base_url());
 		}
 	}
@@ -163,6 +167,21 @@ class Welcome extends CI_Controller {
            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
 			redirect(base_url());
 		}
+	}
+
+	public function upLog($idUser, $nome, $email)
+	{
+		$user = $this->userModel->getUsers($idUser);
+
+		if ($user->email != $email && $user->nome != $nome) {
+			$descricao = "O email foi atualiza de (" . $user->email . "), para (" . $email . ") e 
+			o nome foi atualiza de (" . $user->nome . "), para (" . $nome . ")";
+		} else if($user->nome != $nome){
+			$descricao = "O nome foi atualiza de (" . $user->nome . "), para (" . $nome . ")";
+		} else {
+			$descricao = "O email foi atualiza de (" . $user->email . "), para (" . $email . ")";
+		}
+		return $descricao;
 	}
 
 }
