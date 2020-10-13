@@ -134,41 +134,6 @@ class Welcome extends CI_Controller {
 		}
 	}
 
-	//Enviar link do projeto por email
-	public function enviar(){
-		//Variaveis com dados
-		/*$this->load->library('email');*/
-		$to = 'wagnerramosl@yahoo.com.br';
-		$subject = 'CRUD para avaliação de desenvolvedor júnior';
-		$from = 'cantaoextreme@gmail.com';
-		$mensagem = '<p>link do projeto no github</p> https://github.com/guinhorl/crudSimplesHotel';
-
-		//
-		try {
-			/*$this->email->initialize($config);*/
-			$this->email->from($from);
-			$this->email->to($to);
-			$this->email->subject($subject);
-			$this->email->message($mensagem);
-			//$this->email->send();
-			if($this->email->send()){
-				$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-success'><strong>Email enviado com sucesso!</strong>
-            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
-				redirect(base_url());
-			}else{
-				$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-danger'><strong>Erro </strong>no envio do email!
-            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
-				var_dump($this->email->print_debugger(array('headers')));
-				/*redirect(base_url());*/
-
-			}
-		}catch (Exception $error){
-			$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-danger'><strong>Vixxxx </strong>algo de errado com o envio do email aconteceu, uma exceção foi disparada!
-           	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
-			redirect(base_url());
-		}
-	}
-
 	public function upLog($idUser, $nome, $email)
 	{
 		$user = $this->userModel->getUsers($idUser);
@@ -182,6 +147,55 @@ class Welcome extends CI_Controller {
 			$descricao = "O email foi atualiza de (" . $user->email . "), para (" . $email . ")";
 		}
 		return $descricao;
+	}
+
+	public function enviarEmail(){
+		$this->load->library("phpmailer_library");
+		$Mailer = $this->phpmailer_library->load();
+
+
+		//Define que será usado SMTP
+		$Mailer->IsSMTP();
+		//Enviar e-mail em HTML
+		$Mailer->isHTML(true);
+		//Aceitar carasteres especiais
+		$Mailer->Charset = 'Utf-8';
+		//Configurações
+		$Mailer->SMTPAuth = true;
+		$Mailer->SMTPSecure = 'ssl';
+		//nome do servidor
+		$Mailer->Host = 'smtp.gmail.com';
+		//Porta de saida de e-mail
+		$Mailer->Port = 465;
+		//Dados do e-mail de saida - autenticação
+		$Mailer->Username = 'guinhorlima@gmail.com';
+		$Mailer->Password = '';
+		//E-mail remetente (deve ser o mesmo de quem fez a autenticação)
+		$Mailer->From = 'guinhorlima@gmail.com';
+		//Nome do Remetente
+		$Mailer->FromName = 'Wagner Ramos';
+		//Assunto da mensagem
+		$Mailer->Subject = 'Link do codigo fonte do CRUD';
+		//Corpo da Mensagem
+		$Mailer->Body = '<h5>CRUD Codeingniter Desenvolvedor Junior</h5>
+		<p>Segui o link no github do projeto para canditado a desenvolvedor Junior</p>
+		<p><a href="https://github.com/guinhorl/crudSimplesHotel">CRUD Simplehotel</a></p>';
+		//Corpo da mensagem em texto
+		$Mailer->AltBody = 'conteudo do E-mail em texto';
+
+		//Destinatario
+		$Mailer->AddAddress('wagnerramosl@yahoo.com.br');
+
+		if($Mailer->Send()){
+			$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-success'><strong>Email enviado com sucesso!</strong>
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+			redirect(base_url());
+		}else{
+			echo "Erro no envio do e-mail: " . $Mailer->ErrorInfo;
+			$this->session->set_flashdata('mensagemEmail', "<div class='alert alert-danger'><strong>Erro </strong>no envio do email!
+            	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+			redirect(base_url());
+		}
 	}
 
 }

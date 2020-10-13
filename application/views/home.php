@@ -30,7 +30,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<a type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCadastro">
 			Cadastrar Usuário
 		</a>
-		<a href="<?= base_url('Welcome/enviar') ?>" type="button" class="btn btn-outline-warning" style="margin-left: 12px;">Enviar para Alberto &raquo;
+		<a href="<?= base_url('Welcome/enviarEmail') ?>" type="button" class="btn btn-outline-warning" style="margin-left: 12px;">Enviar para Alberto &raquo;
 		</a>
 		<a href="<?= base_url('log') ?>" type="button" class="btn btn-secondary" style="margin-left: 12px;">
 			Logs &raquo;
